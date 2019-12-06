@@ -1,0 +1,112 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - ex_test.info - /home/jeffrey/Desktop/Software Testing & Maintenance/TicTacToe/getch.cpp</title>
+  <link rel="stylesheet" type="text/css" href="../../../../../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../../../../../index.html">top level</a> - <a href="index.html">home/jeffrey/Desktop/Software Testing &amp; Maintenance/TicTacToe</a> - getch.cpp<span style="font-size: 80%;"> (source / <a href="getch.cpp.func-sort-c.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">ex_test.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">0</td>
+            <td class="headerCovTableEntry">26</td>
+            <td class="headerCovTableEntryLo">0.0 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2019-12-05 22:50:34</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">0</td>
+            <td class="headerCovTableEntry">1</td>
+            <td class="headerCovTableEntryLo">0.0 %</td>
+          </tr>
+          <tr><td><img src="../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            : #include &quot;getch.h&quot;</a>
+<span class="lineNum">       2 </span>            : #include &lt;iostream&gt;
+<span class="lineNum">       3 </span>            : #include &lt;unistd.h&gt;
+<span class="lineNum">       4 </span>            : #include &lt;termios.h&gt;
+<span class="lineNum">       5 </span>            : using namespace std;
+<span class="lineNum">       6 </span>            : 
+<a name="7"><span class="lineNum">       7 </span>            : </a>
+<span class="lineNum">       8 </span>            : // Whole code is copied from stackoverflow
+<span class="lineNum">       9 </span><span class="lineNoCov">          0 : char getch() {</span>
+<span class="lineNum">      10 </span><span class="lineNoCov">          0 :         fflush(stdout);</span>
+<span class="lineNum">      11 </span><span class="lineNoCov">          0 :         fflush(stdin);</span>
+<span class="lineNum">      12 </span><span class="lineNoCov">          0 :         char buf = 0;</span>
+<span class="lineNum">      13 </span><span class="lineNoCov">          0 :         struct termios old = { 0 };</span>
+<span class="lineNum">      14 </span><span class="lineNoCov">          0 :         if (tcgetattr(0, &amp;old) &lt; 0)</span>
+<span class="lineNum">      15 </span><span class="lineNoCov">          0 :                 perror(&quot;tcsetattr()&quot;);</span>
+<span class="lineNum">      16 </span><span class="lineNoCov">          0 :         old.c_lflag &amp;= ~ICANON;</span>
+<span class="lineNum">      17 </span><span class="lineNoCov">          0 :         old.c_lflag &amp;= ~ECHO;</span>
+<span class="lineNum">      18 </span><span class="lineNoCov">          0 :         old.c_cc[VMIN] = 1;</span>
+<span class="lineNum">      19 </span><span class="lineNoCov">          0 :         old.c_cc[VTIME] = 0;</span>
+<span class="lineNum">      20 </span><span class="lineNoCov">          0 :         if (tcsetattr(0, TCSANOW, &amp;old) &lt; 0)</span>
+<span class="lineNum">      21 </span><span class="lineNoCov">          0 :                 perror(&quot;tcsetattr ICANON&quot;);</span>
+<span class="lineNum">      22 </span><span class="lineNoCov">          0 :         if (read(0, &amp;buf, 1) &lt; 0)</span>
+<span class="lineNum">      23 </span><span class="lineNoCov">          0 :                 perror(&quot;read()&quot;);</span>
+<span class="lineNum">      24 </span><span class="lineNoCov">          0 :         old.c_lflag |= ICANON;</span>
+<span class="lineNum">      25 </span><span class="lineNoCov">          0 :         old.c_lflag |= ECHO;</span>
+<span class="lineNum">      26 </span><span class="lineNoCov">          0 :         if (tcsetattr(0, TCSADRAIN, &amp;old) &lt; 0)</span>
+<span class="lineNum">      27 </span><span class="lineNoCov">          0 :                 perror(&quot;tcsetattr ~ICANON&quot;);</span>
+<span class="lineNum">      28 </span><span class="lineNoCov">          0 :         cout &lt;&lt; buf &lt;&lt; &quot;\n&quot;;</span>
+<span class="lineNum">      29 </span><span class="lineNoCov">          0 :         fflush(stdout);</span>
+<span class="lineNum">      30 </span><span class="lineNoCov">          0 :         fflush(stdin);</span>
+<span class="lineNum">      31 </span><span class="lineNoCov">          0 :         if (buf == 'q' || buf == 'Q') {</span>
+<span class="lineNum">      32 </span><span class="lineNoCov">          0 :                 system(&quot;clear&quot;);</span>
+<span class="lineNum">      33 </span><span class="lineNoCov">          0 :                 exit(0);</span>
+<span class="lineNum">      34 </span>            :         }
+<span class="lineNum">      35 </span><span class="lineNoCov">          0 :         return (buf);</span>
+<span class="lineNum">      36 </span>            : }
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.13</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>
